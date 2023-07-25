@@ -8,20 +8,21 @@ import {
 
 export function Footer() {
   return (
-    <div className="pt-16 main-footer flex flex-wrap flex-col justify-center w-full">
+    <div className="pt-10 lg:pt-3 flex flex-wrap flex-col justify-center w-full">
       <img src={'/wave.svg'} alt="waves" className="w-full" />
       <div className="container flex flex-col sm:flex-row justify-around bg-slate-500/10 min-w-full pb-5 ">
         <div className="flex flex-col px-2 items-start mb-5">
           <h1 className="pb-2 text-6xl font-bold text-white">
             <span className="text-green-300">E-</span>Shop
           </h1>
+          <p className='text-gray-400 pb-1'>Fique por dentro das novidades!!</p>
           <input
             className="py-2 p-2 text-sm bg-white rounded shadow-lg border border-gray-300  mb-3 w-full text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent "
             type="email"
-            placeholder="Enter your email"
+            placeholder="Cadastre seu email"
           />
           <button className=" w-2/4 p-1 bg-green-500 border-0 text-white rounded-lg hover:bg-green-300">
-            Suscribe
+            Subscribe
           </button>
         </div>
 

@@ -1,17 +1,17 @@
 const data = [
   {
     id: 1,
-    src: 'https://i.ibb.co/mtc8v16/tv.jpg',
-    title: 'Atualize seu entretenimento',
-    description:
-      'Experimente o que há de mais moderno em entretenimento. De designs elegantes e modernos a recursos avançados como resolução 4K e recursos inteligentes, nossas TVs darão vida aos seus filmes, programas de TV e conteúdo de streaming favoritos.'
-  },
-  {
-    id: 2,
     src: 'https://i.ibb.co/kmr5qQv/headphones.jpg',
     title: 'Melhore sua experiência auditiva',
     description:
       'Leve suas músicas, filmes e muito mais para o próximo nível. Nossa seleção oferece uma variedade de estilos e recursos, incluindo tecnologia de cancelamento de ruído, conectividade sem fio e designs confortáveis ​​para uso durante todo o dia.'
+  },
+  {
+    id: 2,
+    src: 'https://i.ibb.co/mtc8v16/tv.jpg',
+    title: 'Atualize seu entretenimento',
+    description:
+      'Experimente o que há de mais moderno em entretenimento. De designs elegantes e modernos a recursos avançados como resolução 4K e recursos inteligentes, nossas TVs darão vida aos seus filmes, programas de TV e conteúdo de streaming favoritos.'
   },
   {
     id: 3,

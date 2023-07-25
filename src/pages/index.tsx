@@ -5,8 +5,8 @@ import Link from 'next/link'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { Slider } from '@/components/Slider'
-import { Article, CreditCard, Lock, Truck } from 'phosphor-react'
 import { Card } from '@/components/Cards'
+import { Photos } from '@/components/Photos'
 
 interface HomeProps {
   products: {
@@ -27,19 +27,14 @@ export default function Page({ products }: HomeProps) {
 
       <main className="flex flex-col items-center justify-center">
         <Card />
-
-        <h1 className='mt-14 text-5xl font-bold text-white text-center'>
+        <h1 className="mt-14 text-5xl font-bold text-white text-center">
           Nossos <span className="text-violet-500">Destaques</span>
         </h1>
-        <div className="flex flex-col md:grid md:grid-cols-2 px-8 gap-12 py-8 justify-center items-center max-w-5xl">
+        <div className="flex flex-col md:grid md:grid-cols-2 px-8 gap-12 pt-8 pb-14 lg:pb-36 justify-center items-center max-w-5xl">
           {products.map(product => {
             return (
-              <Link
-                key={product.id}
-                href={`/product/${product.id}`}
-                className=""
-              >
-                <div className="bg-slate-500/10 rounded-lg p-1 cursor-pointer relative flex items-center justify-center md:p-8 lg:p-10">
+              <Link key={product.id} href={`/product/${product.id}`}>
+                <div className="bg-slate-500/10 p-1 cursor-pointer flex items-center justify-center md:p-8 lg:p-10 relative transition-all duration-500 ease-in-out ring-offset-2 hover:ring-2 ring-green-300/80  dark:ring-offset-slate-900 rounded-2xl group">
                   <Image
                     className="w-96 h-[25rem] object-contain p-5"
                     width={400}
@@ -60,6 +55,7 @@ export default function Page({ products }: HomeProps) {
             )
           })}
         </div>
+        <Photos />
       </main>
     </>
   )

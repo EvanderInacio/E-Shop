@@ -23,7 +23,7 @@ export default function Product({ product }: ProductProps) {
         <title>{`${product.name} | E-Shop`}</title>
       </Head>
       
-      <div className="pt-20 grid px-2 items-center justify-center lg:grid-cols-2 lg:items-stretch gap-16 max-w-7xl m-[0_auto]">
+      <div className="pt-20 pb-16 grid px-2 items-center justify-center lg:grid-cols-2 lg:items-stretch gap-16 max-w-7xl m-[0_auto]">
         <div className="w-full max-w-xl h-[600px] bg-slate-500/10 rounded-lg p-1 flex items-center justify-center m-[0_auto]">
           <Image
             className="object-contain w-96 h-[30rem] "
@@ -46,14 +46,6 @@ export default function Product({ product }: ProductProps) {
             Add Cart
           </button>
         </div>
-      </div>
-
-      <div className="flex justify-center items-center mt-32">
-        <Link href={'/'} className="">
-          <button className="flex gap-2 items-center bg-violet-500 border-0 text-white rounded-lg p-5 cursor-pointer font-bold text-lg hover:bg-violet-600">
-            <ArrowLeft size={24} weight="bold" /> Voltar
-          </button>
-        </Link>
       </div>
     </>
   )
