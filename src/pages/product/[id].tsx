@@ -1,10 +1,10 @@
-import { stripe } from '@/lib/stripe'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowLeft } from 'phosphor-react'
 import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
+import axios from 'axios'
+import { useState } from 'react'
 
 interface ProductProps {
   product: {
@@ -13,10 +13,30 @@ interface ProductProps {
     image: string
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
+  const [ isLoading, setIsLoading ] = useState(false)
+  
+  async function handleBuyProduct() {
+    try {
+      setIsLoading(true) 
+
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      alert("ERRO")
+      setIsLoading(false)
+    }
+  }
+
   return (
     <>
      <Head>
@@ -42,7 +62,11 @@ export default function Product({ product }: ProductProps) {
 
           <p className="mt-11 text-lg text-gray-300 ">{product.description}</p>
 
-          <button className="mt-8 lg:mt-auto bg-green-500 border-0 text-white rounded-lg p-5 cursor-pointer font-bold text-lg hover:bg-green-300">
+          <button
+            disabled={isLoading}
+            onClick={handleBuyProduct} 
+            className="mt-8 lg:mt-auto bg-green-500 border-0 text-white rounded-lg p-5 cursor-pointer font-bold text-lg hover:bg-green-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
             Add Cart
           </button>
         </div>
@@ -72,7 +96,8 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
           style: 'currency',
           currency: 'BRL'
         }).format(price.unit_amount! / 100),
-        description: product.description
+        description: product.description,
+        defaultPriceId: price.id, 
       }
     },
     revalidate: 10
