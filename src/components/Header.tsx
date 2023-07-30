@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Handbag } from 'phosphor-react'
+import { Favorite } from './Favorite'
+import { ButtonCart } from './ButtonCart'
 
 export function Header() {
   return (
@@ -14,8 +15,9 @@ export function Header() {
         </div>
       </Link>
 
-      <div className="text-white">
-        <Handbag size={35} weight="bold" />
+      <div className="flex gap-3">
+        <ButtonCart />
+        <Favorite />
       </div>
     </header>
   )
