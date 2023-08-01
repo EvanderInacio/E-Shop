@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Favorite } from './Favorite'
+
 import { ButtonCart } from './ButtonCart'
+import { Favorite } from './Favorite'
 
 export function Header() {
   return (

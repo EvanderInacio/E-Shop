@@ -8,7 +8,7 @@ interface ProductProps {
   product: IProduct
 }
 
-export function Favorite({ product }: ProductProps) {
+export function Favorite() {
   const { favoriteItems, removeFavorite, addToCart } = useCart()
   const quantity = favoriteItems.length
 
