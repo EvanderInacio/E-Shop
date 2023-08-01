@@ -2,8 +2,16 @@ import Image from 'next/image'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Minus, Plus, X } from 'phosphor-react'
 import { ButtonFavorite } from './ButtonFavorite'
+import { IProduct, useCart } from '@/contexts/CartContext'
 
-export function Favorite() {
+interface ProductProps {
+  product: IProduct
+}
+
+export function Favorite({ product }: ProductProps) {
+  const { favoriteItems, removeFavorite, addToCart } = useCart()
+  const quantity = favoriteItems.length
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -31,40 +39,55 @@ export function Favorite() {
             Favoritos
           </h2>
 
-          <section>
-            {/* <div className="flex flex-col items-center">
-              <Image
-                width={200}
-                height={200}
-                src={'/buy2.svg'}
-                alt="Carrinho de compra"
-              />
-              <p className="text-gray-400 text-lg">
-                Ops! Parece que seus favoritos está vazia 😞
-              </p>
-            </div> */}
-
-            <div className="w-full h-20 flex gap-5 items-center ">
-              <Image
-                className="w-24 h-20 bg-slate-500/10 flex items-center justify-center rounded-lg object-contain"
-                width={100}
-                height={100}
-                src={'/cart.svg'}
-                alt=""
-              />
-
-              <div className="flex flex-col justify-center text-center items-center">
-                <p className="text-gray-300 text-xl">Produto</p>
-                <button className="text-green-400 hover:text-green-500">Remover</button>
+          <section className="flex flex-col overflow-y-auto">
+            {quantity <= 0 && (
+              <div className="flex flex-col items-center">
+                <Image
+                  width={200}
+                  height={200}
+                  src={'/buy2.svg'}
+                  alt="Carrinho de compra"
+                />
+                <p className="text-gray-400 text-lg">
+                  Ops! Parece que seus favoritos está vazia 😞
+                </p>
               </div>
-            </div>
+            )}
+
+            {favoriteItems.map(favorite => (
+              <div
+                key={favorite.id}
+                className="w-full h-20 flex gap-5 items-center "
+              >
+                <Image
+                  className="w-24 h-20 bg-slate-500/10 flex items-center justify-center rounded-lg object-contain"
+                  width={100}
+                  height={100}
+                  src={favorite.imageUrl}
+                  alt={favorite.name}
+                />
+
+                <div className="flex flex-col justify-center text-center items-center">
+                  <p className="text-gray-300 text-xl">{favorite.name}</p>
+                  <button
+                    onClick={() => removeFavorite(favorite.id)}
+                    className="text-green-400 hover:text-green-500"
+                  >
+                    Remover
+                  </button>
+                </div>
+              </div>
+            ))}
           </section>
 
-          <div className="mt-auto">
-            <button className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300 ">
+          {/* <div className="mt-auto">
+            <button
+              onClick={() => addToCart(product)}
+              className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300"
+            >
               Adicionar ao carrinho
             </button>
-          </div>
+          </div> */}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

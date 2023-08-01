@@ -5,37 +5,33 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import axios from 'axios'
 import { useState } from 'react'
+import { IProduct, useCart } from '@/contexts/CartContext'
+import { Heart } from 'phosphor-react'
 
 interface ProductProps {
-  product: {
-    id: string
-    name: string
-    image: string
-    price: string
-    description: string
-    defaultPriceId: string
-  }
+  product: IProduct
 }
 
 export default function Product({ product }: ProductProps) {
+  const { addToCart, addFavorite } = useCart()
   const [ isLoading, setIsLoading ] = useState(false)
   
-  async function handleBuyProduct() {
-    try {
-      setIsLoading(true) 
+  // async function handleBuyProduct() {
+  //   try {
+  //     setIsLoading(true) 
 
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId
-      })
+  //     const response = await axios.post('/api/checkout', {
+  //       priceId: product.defaultPriceId
+  //     })
 
-      const { checkoutUrl } = response.data
+  //     const { checkoutUrl } = response.data
 
-      window.location.href = checkoutUrl
-    } catch (err) {
-      alert("ERRO")
-      setIsLoading(false)
-    }
-  }
+  //     window.location.href = checkoutUrl
+  //   } catch (err) {
+  //     alert("ERRO")
+  //     setIsLoading(false)
+  //   }
+  // }
 
   return (
     <>
@@ -49,7 +45,7 @@ export default function Product({ product }: ProductProps) {
             className="object-contain w-96 h-[30rem] "
             width={400}
             height={320}
-            src={product.image}
+            src={product.imageUrl}
             alt={product.name}
           />
         </div>
@@ -62,13 +58,21 @@ export default function Product({ product }: ProductProps) {
 
           <p className="mt-11 text-lg text-gray-300 ">{product.description}</p>
 
-          <button
-            disabled={isLoading}
-            onClick={handleBuyProduct} 
-            className="mt-8 lg:mt-auto bg-green-500 border-0 text-white rounded-lg p-5 cursor-pointer font-bold text-lg hover:bg-green-300 disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            Add Cart
-          </button>
+          <div className='flex mt-8 lg:mt-auto gap-4'>
+            <button
+              disabled={isLoading}
+              onClick={() => addToCart(product)} 
+              className=" flex-1  bg-green-500 border-0 text-white rounded-lg p-5 cursor-pointer font-bold text-lg hover:bg-green-300 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              Adicionar ao carrinho
+            </button>
+            <button 
+              onClick={() => addFavorite(product)} 
+              className='bg-green-500 p-4 rounded-lg cursor-pointer font-bold text-lg hover:bg-green-300 disabled:opacity-70 disabled:cursor-not-allowed text-white'
+            >
+              <Heart size={35} weight='bold' />
+            </button>
+          </div>
         </div>
       </div>
     </>
@@ -91,7 +95,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
       product: {
         id: product.id,
         name: product.name,
-        image: product.images[0],
+        imageUrl: product.images[0],
         price: new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL'
