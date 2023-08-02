@@ -1,11 +1,36 @@
-import { useCart } from '@/contexts/CartContext'
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Minus, Plus, Trash, X } from 'phosphor-react'
+import axios from 'axios'
+import { useCart } from '@/contexts/CartContext'
+import { Minus, Plus, Trash } from 'phosphor-react'
 
 export default function Cart() {
-  const { cartItems, removeCart } = useCart()
+  const [isLoading, setIsLoading] = useState(false)
+  const { cartItems, removeCart, cartTotal } = useCart()
   const quantity = cartItems.length
+
+  const formattedTotal = new Intl.NumberFormat('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(cartTotal)
+
+  async function handleBuyProduct() {
+    try {
+      setIsLoading(true)
+
+      const response = await axios.post('/api/checkout', {
+        products: cartItems
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      alert('ERRO')
+      setIsLoading(false)
+    }
+  }
 
   return (
     <>
@@ -67,11 +92,17 @@ export default function Cart() {
 
                   <div className="flex gap-7 md:gap-10 items-center justify-center mt-7 sm:mt-0 ">
                     {/* <div className="flex gap-4 font-bold">
-                      <button className="text-green-500 hover:text-green-500">
+                      <button
+                        onClick={() => increaseItemQuantity(cartItem)}
+                        className="text-green-500 hover:text-green-500"
+                      >
                         <Plus size={22} weight="bold" />
                       </button>
-                      <p className="text-gray-300">10</p>
-                      <button className="text-green-500 hover:text-green-500">
+                      <p className="text-gray-300">{cartItem.quantity}</p>
+                      <button
+                        onClick={() => decreaseItemQuantity(cartItem)}
+                        className="text-green-500 hover:text-green-500"
+                      >
                         <Minus size={22} weight="bold" />
                       </button>
                     </div> */}
@@ -96,16 +127,21 @@ export default function Cart() {
                 <div className="flex items-center gap-20 justify-between">
                   <span className="text-lg text-gray-300">Quantidade</span>
                   <p className="text-lg text-gray-300">
-                    {quantity} {quantity > 1 ? 'items' : 'item'}
+                    {quantity} {quantity === 1 ? 'item' : 'items'}
                   </p>
                 </div>
                 <div className="flex justify-between items-center gap-20 font-bold">
                   <span className="text-lg text-gray-300">Valor Total</span>
-                  <p className="text-lg md:text-xl text-gray-100">R$ 100,00</p>
+                  <p className="text-lg md:text-xl text-gray-100">
+                    {formattedTotal}
+                  </p>
                 </div>
               </section>
 
-              <button className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300 ">
+              <button
+                onClick={handleBuyProduct}
+                className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300 "
+              >
                 Finalizar compra
               </button>
             </div>
