@@ -1,5 +1,5 @@
+import { ReactNode, createContext, useContext, useState } from 'react'
 import { produce } from 'immer'
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 export interface IProduct {
   id: string
@@ -9,8 +9,8 @@ export interface IProduct {
   numberPrice: number
   description: string
   defaultPriceId: string
-  quantity: number,
-  unitAmount: number;
+  quantity: number
+  unitAmount: number
 }
 
 interface CartContextData {
@@ -22,8 +22,8 @@ interface CartContextData {
   addToCart: (product: IProduct) => void
   removeCart: (productId: string) => void
   checkItemExists: (productId: string) => boolean
-
-  amount: string;
+  increaseItemQuantity: (product: IProduct) => void
+  decreaseItemQuantity: (product: IProduct) => void
 }
 
 interface CartContextProviderProps {
@@ -35,7 +35,6 @@ export const CartContext = createContext({} as CartContextData)
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartItems, setCartItems] = useState<IProduct[]>([])
   const [favoriteItems, setFavoriteItems] = useState<IProduct[]>([])
-  const [amount, setAmount] = useState('');
 
   function addFavorite(product: IProduct) {
     setFavoriteItems(state => [...state, product])
@@ -46,7 +45,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function addToCart(product: IProduct) {
-    setCartItems(state => [ ...state, product])    
+    setCartItems(state => [...state, product])
   }
 
   function removeCart(productId: string) {
@@ -57,60 +56,39 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     return cartItems.some(product => product.id === productId)
   }
 
+  function increaseItemQuantity(product: IProduct) {
+    const checkItemExists = cartItems.findIndex(
+      cartItems => cartItems.id === product.id
+    )
+
+    const updatedList = produce(cartItems, draft => {
+      if (checkItemExists < 0) {
+        draft.push(product)
+      } else {
+        draft[checkItemExists].quantity = product.quantity + 1
+      }
+    })
+
+    setCartItems(updatedList)
+  }
+
+  function decreaseItemQuantity(product: IProduct) {
+    const updatedList = produce(cartItems, draft => {
+      const checkItemExists = cartItems.findIndex(
+        cartItems => cartItems.id === product.id
+      )
+
+      if (checkItemExists >= 0) {
+        draft[checkItemExists].quantity = product.quantity - 1
+      }
+    })
+
+    setCartItems(updatedList)
+  }
+  
   const cartTotal = cartItems.reduce((total, product) => {
-    return total + product.numberPrice
+    return (total + (product.numberPrice * product.quantity))
   }, 0)
-
-
-
-  // function decreaseItemQuantity(product: IProduct) {
-  //   if(product.quantity <= 1) {
-  //     return
-  //   }
-
-  //   // const updatedList = cartItems.map((item) => {
-  //   //   if (item.id === product.id) {
-  //   //     return { 
-  //   //       ...item,
-  //   //       quantity: item.quantity--,
-  //   //     }
-  //   //   }
-  
-  //   //   return { ...item };
-  //   // })
-
-  //   // setCartItems(updatedList)
-  // } 
-
-  // function increaseItemQuantity(product: IProduct ) {
-  //   const checkItemExists = cartItems.findIndex((cartItems) => cartItems.id === product.id)
-
-  //   const updatedList = produce(cartItems, (draft) => {
-  //     if (checkItemExists < 0) {
-  //       draft.push(product)
-  //     } else {
-  //       draft[checkItemExists].quantity += product.numberPrice
-  //     }
-
-  //   })
-
-  //   setCartItems(updatedList);
-  // }
-
-  
-  // useEffect(() => {
-  //   const total = cartItems.reduce((acc, product) => {
-  //     return (acc + (product.numberPrice * product.quantity));
-  //   }, 0)
-    
-  //   const totalFormatted = new Intl.NumberFormat('pt-BR', {
-  //     style: 'currency',
-  //     currency: 'BRL',
-  //   }).format(total / 100)
-
-  //   setAmount(totalFormatted)
-  // }, [cartItems])
-
 
   return (
     <CartContext.Provider
@@ -123,7 +101,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         removeFavorite,
         favoriteItems,
         cartTotal,
-        amount,
+        increaseItemQuantity,
+        decreaseItemQuantity
       }}
     >
       {children}

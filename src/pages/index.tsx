@@ -30,7 +30,7 @@ export default function Page({ products }: HomeProps) {
         <h1 className="mt-14 text-5xl font-bold text-white text-center">
           Nossos <span className="text-violet-500">Destaques</span>
         </h1>
-        <div className="flex flex-col md:grid md:grid-cols-2 px-8 gap-12 pt-8 pb-14 lg:pb-36 justify-center items-center max-w-5xl">
+        <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 px-8 gap-12 pt-8 pb-14 lg:pb-36 justify-center items-center max-w-7xl">
           {products.map(product => {
             return (
               <Link key={product.id} href={`/product/${product.id}`}>
@@ -62,9 +62,17 @@ export default function Page({ products }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await stripe.products.list({
+  const pagination = []
+
+  let response = await stripe.products.list({
+    limit: 20,
     expand: ['data.default_price']
   })
+
+  // response.data.forEach((c) => {
+  //   pagination.push(c.id)
+  // })
+
 
   const products = response.data.map(product => {
     const price = product.default_price as Stripe.Price

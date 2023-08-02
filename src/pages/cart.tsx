@@ -7,7 +7,7 @@ import { Minus, Plus, Trash } from 'phosphor-react'
 
 export default function Cart() {
   const [isLoading, setIsLoading] = useState(false)
-  const { cartItems, removeCart, cartTotal } = useCart()
+  const { cartItems, removeCart, cartTotal, increaseItemQuantity, decreaseItemQuantity } = useCart()
   const quantity = cartItems.length
 
   const formattedTotal = new Intl.NumberFormat('pt-br', {
@@ -91,7 +91,7 @@ export default function Cart() {
                   </div>
 
                   <div className="flex gap-7 md:gap-10 items-center justify-center mt-7 sm:mt-0 ">
-                    {/* <div className="flex gap-4 font-bold">
+                    <div className="flex gap-4 font-bold">
                       <button
                         onClick={() => increaseItemQuantity(cartItem)}
                         className="text-green-500 hover:text-green-500"
@@ -105,7 +105,7 @@ export default function Cart() {
                       >
                         <Minus size={22} weight="bold" />
                       </button>
-                    </div> */}
+                    </div>
 
                     <strong className=" text-lg font-extrabold text-gray-200 sm:mt-0">
                       {cartItem.price}
