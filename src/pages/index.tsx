@@ -30,20 +30,20 @@ export default function Page({ products }: HomeProps) {
         <h1 className="mt-14 text-5xl font-bold text-white text-center">
           Nossos <span className="text-violet-500">Destaques</span>
         </h1>
-        <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 px-8 gap-12 pt-8 pb-14 lg:pb-36 justify-center items-center max-w-7xl">
+        <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 px-4 gap-8 pt-8 pb-14 lg:pb-36 justify-center items-center max-w-7xl">
           {products.map(product => {
             return (
               <Link key={product.id} href={`/product/${product.id}`}>
-                <div className="bg-slate-500/10 p-1 cursor-pointer flex items-center justify-center md:p-8 lg:p-10 relative transition-all duration-500 ease-in-out ring-offset-2 hover:ring-2 ring-green-300/80  dark:ring-offset-slate-900 rounded-md group">
+                <div className="bg-slate-500/10 p-2 cursor-pointer flex items-center justify-center md:p-8 lg:p-10 relative transition-all duration-500 ease-in-out ring-offset-2 hover:ring-2 ring-green-300/80  dark:ring-offset-slate-900 rounded-md group">
                   <Image
-                    className="w-96 h-[25rem] object-contain p-5"
+                    className="w-96 h-[22rem] object-contain p-2"
                     width={400}
                     height={320}
                     src={product.imageUrl}
                     alt={product.name}
                   />
-                  <footer className="absolute bottom-1 left-1 right-1 rounded-md flex items-center flex-col gap-1 bg-zinc-950/70 p-7">
-                    <strong className="text-lg text-white font-semibold">
+                  <footer className="absolute bottom-1 left-1 right-1 rounded-md flex items-center flex-col gap-1 bg-zinc-950/70 p-5">
+                    <strong className="text-lg text-white font-bold">
                       {product.name}
                     </strong>
                     <span className="text-xl font-bold text-green-300">
@@ -62,17 +62,10 @@ export default function Page({ products }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const pagination = []
-
   let response = await stripe.products.list({
-    limit: 20,
+    limit: 30,
     expand: ['data.default_price']
   })
-
-  // response.data.forEach((c) => {
-  //   pagination.push(c.id)
-  // })
-
 
   const products = response.data.map(product => {
     const price = product.default_price as Stripe.Price

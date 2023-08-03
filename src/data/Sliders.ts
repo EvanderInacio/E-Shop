@@ -26,6 +26,13 @@ const data = [
     title: 'Fique conectado com relógios inteligentes',
     description:
       'Fique conectado e no controle do seu dia com nossos relógios inteligentes. Incluindo rastreamento de condicionamento físico, notificações por telefone e assistentes de voz. Estes relógios são a combinação perfeita de funcionalidade e estilo.'
+  },
+  {
+    id: 5,
+    src: '/banner-camera.jpg',
+    title: 'Cameras DSLR para fotos incríveis',
+    description:
+      'Você é um aspirante a fotógrafo procurando levar suas habilidades para o próximo nível? Nossas câmeras DSLR oferecem recursos avançados e sensores de imagem de alta qualidade para ajudá-lo a capturar fotos impressionantes. De fotos de paisagens a retratos, essas câmeras são perfeitas para capturar todos os tipos de assuntos.'
   }
 ]
 
