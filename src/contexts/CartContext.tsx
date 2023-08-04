@@ -78,16 +78,16 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cartItems => cartItems.id === product.id
       )
 
-      if (checkItemExists >= 0) {
+      if (checkItemExists !== -1 && draft[checkItemExists].quantity > 1) {
         draft[checkItemExists].quantity = product.quantity - 1
-      }
+      } 
     })
 
     setCartItems(updatedList)
   }
-  
+
   const cartTotal = cartItems.reduce((total, product) => {
-    return (total + (product.numberPrice * product.quantity))
+    return total + product.numberPrice * product.quantity
   }, 0)
 
   return (

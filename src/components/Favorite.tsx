@@ -49,7 +49,7 @@ export function Favorite() {
                   alt="Carrinho de compra"
                 />
                 <p className="text-gray-400 text-lg">
-                  Ops! Parece que seus favoritos está vazia 😞
+                   Favoritos está vazia 😞
                 </p>
               </div>
             )}
@@ -57,21 +57,21 @@ export function Favorite() {
             {favoriteItems.map(favorite => (
               <div
                 key={favorite.id}
-                className="w-full h-20 flex gap-5 items-center "
+                className="w-full h-20 flex gap-5 items-center"
               >
                 <Image
-                  className="w-24 h-20 bg-slate-500/10 flex items-center justify-center rounded-lg object-contain"
+                  className="w-24 h-20 bg-slate-500/10 flex items-center justify-center rounded-lg object-contain p-2"
                   width={100}
                   height={100}
                   src={favorite.imageUrl}
                   alt={favorite.name}
                 />
 
-                <div className="flex flex-col justify-center text-center items-center">
-                  <p className="text-gray-300 text-xl">{favorite.name}</p>
+                <div className="flex flex-col">
+                  <p className="text-gray-300 text-xl mb-2">{favorite.name}</p>
                   <button
                     onClick={() => removeFavorite(favorite.id)}
-                    className="text-green-400 hover:text-green-500"
+                    className="text-red-400 hover:text-red-500 text-start"
                   >
                     Remover
                   </button>
@@ -79,15 +79,6 @@ export function Favorite() {
               </div>
             ))}
           </section>
-
-          {/* <div className="mt-auto">
-            <button
-              onClick={() => addToCart(product)}
-              className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300"
-            >
-              Adicionar ao carrinho
-            </button>
-          </div> */}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

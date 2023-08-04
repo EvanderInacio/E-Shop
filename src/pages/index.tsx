@@ -36,7 +36,7 @@ export default function Page({ products }: HomeProps) {
               <Link key={product.id} href={`/product/${product.id}`}>
                 <div className="bg-slate-500/10 p-2 cursor-pointer flex items-center justify-center md:p-8 lg:p-10 relative transition-all duration-500 ease-in-out ring-offset-2 hover:ring-2 ring-green-300/80  dark:ring-offset-slate-900 rounded-md group">
                   <Image
-                    className="w-96 h-[22rem] object-contain p-2"
+                    className="w-96 h-[22rem] object-contain pt-2 px-2 pb-10"
                     width={400}
                     height={320}
                     src={product.imageUrl}
