@@ -7,7 +7,13 @@ import { Minus, Plus, Trash } from 'phosphor-react'
 
 export default function Cart() {
   const [isLoading, setIsLoading] = useState(false)
-  const { cartItems, removeCart, cartTotal, increaseItemQuantity, decreaseItemQuantity } = useCart()
+  const {
+    cartItems,
+    removeCart,
+    cartTotal,
+    increaseItemQuantity,
+    decreaseItemQuantity
+  } = useCart()
   const quantity = cartItems.length
 
   const formattedTotal = new Intl.NumberFormat('pt-br', {
@@ -139,6 +145,7 @@ export default function Cart() {
               </section>
 
               <button
+                disabled={isLoading || quantity <= 0}
                 onClick={handleBuyProduct}
                 className="w-full h-16 bg-green-500 text-white text-lg rounded-lg font-bold disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-300 "
               >

@@ -2,8 +2,6 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { useState } from 'react'
-import axios from 'axios'
 import { IProduct, useCart } from '@/contexts/CartContext'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
@@ -14,19 +12,24 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const { addToCart, addFavorite, checkItemExists } = useCart()
+  const { addToCart, addFavorite, checkItemExists, checkFavorite} = useCart()
   const { isFallback } = useRouter()
-
-  if (isFallback) {
-    return <p>loading.....</p>
-  }
-
+  
   const itemAlreadyInCart = checkItemExists(product.id)
+  const itemAlreadyInFavorite = checkFavorite(product.id)
+  
+  if (isFallback) {
+    return <p className='m-[0_auto] text-green-400'>loading.....</p>
+  }
 
   return (
     <>
       <Head>
         <title>{`${product.name} | E-Shop`}</title>
+        <meta name="description" content={product.description} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description} />
+        <meta property="og:image" content={product.imageUrl} />
       </Head>
 
       <div className="pt-20 pb-16 grid px-2 items-center justify-center lg:grid-cols-2 lg:items-stretch gap-16 max-w-7xl m-[0_auto]">
@@ -63,6 +66,7 @@ export default function Product({ product }: ProductProps) {
                 : 'Adicionar ao carrinho'}
             </button>
             <button
+              disabled={itemAlreadyInFavorite}
               onClick={() => addFavorite(product)}
               className="bg-red-500 p-4 rounded-lg cursor-pointer font-bold text-lg hover:bg-red-600 disabled:opacity-70 disabled:cursor-not-allowed text-white"
             >
@@ -99,7 +103,6 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         description: product.description,
         numberPrice: price.unit_amount! / 100,
         defaultPriceId: price.id,
-
         quantity: 1,
         unitAmount: price.unit_amount
       }

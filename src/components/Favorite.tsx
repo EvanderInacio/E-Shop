@@ -1,15 +1,11 @@
 import Image from 'next/image'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Minus, Plus, X } from 'phosphor-react'
+import { useCart } from '@/contexts/CartContext'
 import { ButtonFavorite } from './ButtonFavorite'
-import { IProduct, useCart } from '@/contexts/CartContext'
-
-interface ProductProps {
-  product: IProduct
-}
+import { X } from 'phosphor-react'
 
 export function Favorite() {
-  const { favoriteItems, removeFavorite, addToCart } = useCart()
+  const { favoriteItems, removeFavorite } = useCart()
   const quantity = favoriteItems.length
 
   return (
@@ -39,7 +35,7 @@ export function Favorite() {
             Favoritos
           </h2>
 
-          <section className="flex flex-col overflow-y-auto">
+          <section className="flex flex-col h-full overflow-y-auto">
             {quantity <= 0 && (
               <div className="flex flex-col items-center">
                 <Image
@@ -57,7 +53,7 @@ export function Favorite() {
             {favoriteItems.map(favorite => (
               <div
                 key={favorite.id}
-                className="w-full h-20 flex gap-5 items-center"
+                className="w-full h-20 flex gap-5 mb-4 items-center"
               >
                 <Image
                   className="w-24 h-20 bg-slate-500/10 flex items-center justify-center rounded-lg object-contain p-2"

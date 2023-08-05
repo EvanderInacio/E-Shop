@@ -22,6 +22,7 @@ interface CartContextData {
   addToCart: (product: IProduct) => void
   removeCart: (productId: string) => void
   checkItemExists: (productId: string) => boolean
+  checkFavorite: (productId: string) => boolean
   increaseItemQuantity: (product: IProduct) => void
   decreaseItemQuantity: (product: IProduct) => void
 }
@@ -42,6 +43,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   function removeFavorite(productId: string) {
     setFavoriteItems(state => state.filter(product => product.id !== productId))
+  }
+
+  function checkFavorite(productId: string) {
+    return favoriteItems.some(product => product.id === productId)
   }
 
   function addToCart(product: IProduct) {
@@ -80,7 +85,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
       if (checkItemExists !== -1 && draft[checkItemExists].quantity > 1) {
         draft[checkItemExists].quantity = product.quantity - 1
-      } 
+      }
     })
 
     setCartItems(updatedList)
@@ -97,6 +102,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         addToCart,
         removeCart,
         checkItemExists,
+        checkFavorite,
         addFavorite,
         removeFavorite,
         favoriteItems,
