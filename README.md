@@ -4,20 +4,20 @@
 </h1>
 
  <p align="center">
-  <img alt="Github Top Language" src="https://img.shields.io/github/languages/top/EvanderInacio/E-Shop?color=00FFFB">
-  <img alt="Github Language Count" src="https://img.shields.io/github/languages/count/EvanderInacio/E-Shop?color=00FFFB">
-  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/EvanderInacio/E-Shop?color=00FFFB">
+  <img alt="Github Top Language" src="https://img.shields.io/github/languages/top/EvanderInacio/E-Shop?color=00875f">
+  <img alt="Github Language Count" src="https://img.shields.io/github/languages/count/EvanderInacio/E-Shop?color=00875f">
+  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/EvanderInacio/E-Shop?color=00875f">
 </p>
 
 <br>
 
-![Resultado final do projeto]()
+![Resultado final do projeto](https://raw.githubusercontent.com/EvanderInacio/E-Shop/master/public/preview.png)
 
 <br>
 
 ## 📝 Descrição
 
-.
+Este projeto é uma implementação de um site de e-commerce completo, construído com as tecnologias Next.js, Tailwind CSS e integração de pagamentos utilizando Stripe. O objetivo é criar uma plataforma de compras online moderna, responsiva e de fácil utilização.😃
 
 ## 🚀 Deploy
 
