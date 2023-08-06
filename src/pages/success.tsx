@@ -19,7 +19,7 @@ export default function Success({ costumerName, productsImages }: SuccessProps) 
       </Head>
 
       <div className="flex flex-col items-center justify-center m-[0_auto] pt-16">
-        <div className="grid lg:grid-cols-2 gap-4 mb-20">
+        <div className="flex flex-col lg:flex-row lg:flex-wrap max-w-7xl items-center justify-center gap-4 mb-20">
           {productsImages.map((image, i) => {
             return (
               <Image
