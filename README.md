@@ -1,34 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+    E-Shop 
+    <img width="25px" src="https://raw.githubusercontent.com/EvanderInacio/E-Shop/9e5389b386c8550d7fd30558fcf9aa8e51fe1db6/public/logo.svg"/>
+</h1>
 
-## Getting Started
+ <p align="center">
+  <img alt="Github Top Language" src="https://img.shields.io/github/languages/top/EvanderInacio/E-Shop?color=00FFFB">
+  <img alt="Github Language Count" src="https://img.shields.io/github/languages/count/EvanderInacio/E-Shop?color=00FFFB">
+  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/EvanderInacio/E-Shop?color=00FFFB">
+</p>
 
-First, run the development server:
+<br>
+
+![Resultado final do projeto]()
+
+<br>
+
+## 📝 Descrição
+
+.
+
+## 🚀 Deploy
+
+[ecommerce-e-shop.vercel.app](https://ecommerce-e-shop.vercel.app/)
+
+## 🔥 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- NextJS
+- TypeScript
+- Tailwind
+- Stripe
+- Radix
+
+## 📚 Bibliotecas
+
+- [Google Fonts](https://fonts.google.com/)
+- [Phosphor Icons](https://phosphoricons.com/)
+
+
+### 🎲 Rodando o Front End da aplicação
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+# Clone este repositório
+$ git clone https://github.com/EvanderInacio/E-Shop.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd e-shop
+
+# Instale as dependências do projeto
+$ npm install | yarn install 
+
+# Execute a aplicação
+$ npm run dev
+
+# A aplicação  inciará na porta:3000 - acesse <http://localhost:3000>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Autor<br>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/EvanderInacio">
+        <img src="https://avatars.githubusercontent.com/u/72362299?s=96&v=4" width="100px;" /><br>
+        <sub>
+          <b>Evander Inácio</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  <h3 align="center"> Developed by <a href="https://www.linkedin.com/in/evander-inacio/">Evander Inácio</a> ☕</h3>
