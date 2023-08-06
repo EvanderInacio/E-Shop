@@ -100,14 +100,14 @@ export default function Cart() {
                     <div className="flex gap-4 font-bold">
                       <button
                         onClick={() => increaseItemQuantity(cartItem)}
-                        className="text-green-500 hover:text-green-500"
+                        className="text-green-300 hover:text-green-500"
                       >
                         <Plus size={22} weight="bold" />
                       </button>
                       <p className="text-gray-300">{cartItem.quantity}</p>
                       <button
                         onClick={() => decreaseItemQuantity(cartItem)}
-                        className="text-green-500 hover:text-green-500"
+                        className="text-green-300 hover:text-green-500"
                       >
                         <Minus size={22} weight="bold" />
                       </button>
