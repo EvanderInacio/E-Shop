@@ -1,19 +1,16 @@
-import { stripe } from '@/lib/stripe'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
 
 interface SuccessProps {
   costumerName: string
-  product: {
-    name: string
-    imageUrl: string
-  }
+  productsImages: string[]
 }
 
-export default function Success({ costumerName, product }: SuccessProps) {
+export default function Success({ costumerName, productsImages }: SuccessProps) {
   return (
     <>
       <Head>
@@ -22,22 +19,33 @@ export default function Success({ costumerName, product }: SuccessProps) {
       </Head>
 
       <div className="flex flex-col items-center justify-center m-[0_auto] pt-16">
-        <h1 className="text-2xl text-gray-100 mb-16 text-center">
+        <div className="grid lg:grid-cols-2 gap-4 mb-20">
+          {productsImages.map((image, i) => {
+            return (
+              <Image
+                key={i}
+                className="w-96 h-[25rem] bg-slate-500/10 rounded-md p-5 flex items-center justify-center object-contain"
+                width={400}
+                height={320}
+                src={image}
+                alt=""
+              />
+            )
+          })}
+        </div>
+
+        <h1 className="text-xl lg:text-5xl text-violet-550 text-center">
           Compra efetuada com sucesso!
         </h1>
 
-        <Image
-          className="w-96 h-[25rem] bg-slate-500/10 rounded-md p-5 flex items-center justify-center object-contain"
-          width={400}
-          height={320}
-          src={product.imageUrl}
-          alt={product.name}
-        />
-
-        <p className="text-xl text-gray-300 my-16 max-w-xl text-center">
-          Uhuul <strong className="text-green-300">{costumerName}</strong>, seu
-          produto <strong className="text-violet-550">{product.name}</strong> já
-          está a caminho da sua casa.
+        <p className="text-base lg:text-2xl text-gray-300 my-16 max-w-xl text-center">
+          Uhuul <strong className="text-green-300">{costumerName}</strong>, sua
+          compra de{' '}
+          <span className="text-green-300 font-extrabold">
+            {productsImages.length}
+          </span>{' '}
+          {productsImages.length === 1 ? 'produto' : 'produtos'} já está a
+          caminho da sua casa 😄
         </p>
 
         <Link
@@ -68,15 +76,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   })
 
   const costumerName = session.customer_details?.name
-  const product = session.line_items?.data[0].price?.product as Stripe.Product
+  const productsImages = session.line_items?.data.map(item => {
+    const product = item.price?.product as Stripe.Product
+    return product.images[0]
+  })
 
   return {
     props: {
       costumerName,
-      product: {
-        name: product.name,
-        imageUrl: product.images[0]
-      }
+      productsImages
     }
   }
 }

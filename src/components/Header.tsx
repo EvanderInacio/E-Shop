@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
 import { ButtonCart } from './ButtonCart'
 import { Favorite } from './Favorite'
 

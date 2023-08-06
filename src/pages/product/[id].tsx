@@ -1,25 +1,28 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import Head from 'next/head'
 import Image from 'next/image'
 import { IProduct, useCart } from '@/contexts/CartContext'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
-import { Heart } from 'phosphor-react'
+import * as Toast from '@radix-ui/react-toast'
+import { Heart, ShoppingCartSimple } from 'phosphor-react'
 
 interface ProductProps {
   product: IProduct
 }
 
 export default function Product({ product }: ProductProps) {
-  const { addToCart, addFavorite, checkItemExists, checkFavorite} = useCart()
+  const { addToCart, addFavorite, checkItemExists, checkFavorite } = useCart()
   const { isFallback } = useRouter()
-  
+  const [toastOpen, setToastOpen] = useState(false)
+
   const itemAlreadyInCart = checkItemExists(product.id)
   const itemAlreadyInFavorite = checkFavorite(product.id)
-  
+
   if (isFallback) {
-    return <p className='m-[0_auto] text-green-400'>loading.....</p>
+    return <p className="m-[0_auto] text-green-400">loading.....</p>
   }
 
   return (
@@ -54,7 +57,10 @@ export default function Product({ product }: ProductProps) {
           <div className="flex mt-8 lg:mt-auto gap-4">
             <button
               disabled={itemAlreadyInCart}
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                setToastOpen(true)
+                addToCart(product)
+              }}
               className={`flex-1 ${
                 itemAlreadyInCart
                   ? 'bg-red-500'
@@ -65,6 +71,24 @@ export default function Product({ product }: ProductProps) {
                 ? 'Produto já está no carrinho'
                 : 'Adicionar ao carrinho'}
             </button>
+            <Toast.Provider swipeDirection="right">
+              <Toast.Root
+                className="bg-green-500 text-white z-50 p-3 rounded-xl"
+                duration={3000}
+                open={toastOpen}
+                onOpenChange={setToastOpen}
+              >
+                <Toast.Title className="mb-2 text-lg flex items-center gap-1">
+                  Adicionado ao carrinho{' '}
+                  <ShoppingCartSimple size={18} weight="bold" />
+                </Toast.Title>
+                <Toast.Description className="font-bold text-lg">
+                  {product.name}
+                </Toast.Description>
+              </Toast.Root>
+              <Toast.Viewport className="fixed bottom-0 right-0 flex p-4" />
+            </Toast.Provider>
+
             <button
               disabled={itemAlreadyInFavorite}
               onClick={() => addFavorite(product)}

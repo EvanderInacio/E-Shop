@@ -24,10 +24,16 @@ export function Slider() {
         style={{ transform: `translateX(-${100 * currentSlide}vw)` }}
       >
         {data.map(image => (
-          <div className="slide" style={{ backgroundImage: `url(${image.src})`}}>
+          <div
+            key={image.id}
+            className="slide"
+            style={{ backgroundImage: `url(${image.src})` }}
+          >
             <div className="px-1 slide-texts container mx-auto flex flex-col items-start justify-center h-full gap-5 text-violet-50">
-              <h1 className="text-lg lg:text-7xl text-violet-50 font-bold space-font 
-              w-4/5 uppercase">
+              <h1
+                className="text-lg lg:text-7xl text-violet-50 font-bold space-font 
+              w-4/5 uppercase"
+              >
                 {image.title}
               </h1>
 
